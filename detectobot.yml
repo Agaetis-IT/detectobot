@@ -1,0 +1,24 @@
+#application
+version : 0.1
+
+app.host : "0.0.0.0"
+app.port : 5000
+
+# input params
+input.id : "id"
+input.url : "url"
+input.path : "path"
+input.user : "user"
+
+# output params
+output.detection : "detections"
+
+# Multiprocessing params
+multiproc.numWorkers : 5
+multiproc.debug : false
+
+# TF model params
+model.dir : "model"
+model.name : "detectobot-v1.pb"
+model.label : "monobloc_label_map.pbtxt"
+model.nClasses : 1
