@@ -25,3 +25,7 @@ model.nClasses : 1
 
 # File directory
 file.location : "/input"
+
+# Monobot processed image urls
+url.success : "https://mediobot.monobot.fr/picture/detection/processed/success"
+url.error : "https://mediobot.monobot.fr/picture/detection/processed/error"

@@ -36,6 +36,7 @@ RUN pip install -U Pillow
 RUN pip install -U pyyaml 
 RUN pip install -U simplejson
 RUN pip install -U cerberus
+RUN pip install -U requests
 
 #Setting up working directory 
 RUN mkdir /lab

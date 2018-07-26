@@ -2,6 +2,7 @@ import multiprocessing
 from multiprocessing import Queue, Pool
 from app.models.objectDetection import worker
 from config import params
+import requests
 
 def RunDetection(inputs):
     """
@@ -25,8 +26,12 @@ def RunDetection(inputs):
     output = []
     while True:
         if not output_q.empty():
-            output.append(output_q.get())
-
+            processedPicture = output_q.get()
+            if "ERROR" in processedPicture[params['output.detection']]:
+                r = requests.post(params['url.error'], data=processedPicture)
+            else:
+                r = requests.post(params['url.success'], data=processedPicture)
+            output.append({"status":r.status_code, "reason":r.reason})
         if len(output) == len(inputs):
             break
 
