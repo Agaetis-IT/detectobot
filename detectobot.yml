@@ -8,14 +8,15 @@ app.port : 5000
 input.id : "id"
 input.url : "url"
 input.path : "path"
-input.user : "user"
+input.user : "author"
+input.origin : "origin"
 
 # output params
 output.detection : "detections"
 
 # Multiprocessing params
 multiproc.numWorkers : 5
-multiproc.debug : true
+multiproc.debug : false
 
 # TF model params
 model.dir : "model"

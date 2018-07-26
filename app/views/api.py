@@ -6,6 +6,7 @@ from config import params
 from cerberus import Validator
 import logging
 import json
+import requests
 
 _logger = logging.getLogger(__name__)
 api = Blueprint('pv', __name__)
@@ -31,6 +32,9 @@ def detection():
         for image in inputs:
             if v.validate(image):
                 imagesList.append(image) 
+            else:
+                image[params['output.detection']] = {'ERROR missing inputs':"Not found or incorrect inputs"}
+                r = requests.post(params['url.error'], data=image)
         if len(imagesList) == 0:
             raise InputsException
                 
@@ -41,8 +45,8 @@ def detection():
         return res
 
     except InputsException:
-        res = jsonify({"[ERROR inputs]": "Not found or incorrect inputs"})
-        res.status_code = 200
+        res = jsonify({"ERROR nothing to do":"No picture to tag"})
+        res.status_code = 400
         return res
 
     return jsonify({})

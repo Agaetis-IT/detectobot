@@ -90,7 +90,7 @@ def worker(input_q, output_q):
             (boxes, scores, classes, num_detections) = detect_objects(getImage(image[params['input.path']]), sess, detection_graph)
             image[params['output.detection']] = formatDetectionOutput(scores, boxes, classes)
         else:
-            image[params['output.detection']] = {"ERROR":"Incorrect Pass {}".format(image[params['input.path']])}
+            image[params['output.detection']] = {"ERROR incorrect path":image[params['input.path']]}
         output_q.put(image)
 
     sess.close()
