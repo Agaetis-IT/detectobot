@@ -15,7 +15,7 @@ output.detection : "detections"
 
 # Multiprocessing params
 multiproc.numWorkers : 5
-multiproc.debug : false
+multiproc.debug : true
 
 # TF model params
 model.dir : "model"
