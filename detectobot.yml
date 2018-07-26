@@ -22,3 +22,6 @@ model.dir : "model"
 model.name : "detectobot-v1.pb"
 model.label : "monobloc_label_map.pbtxt"
 model.nClasses : 1
+
+# File directory
+file.location : "/input"

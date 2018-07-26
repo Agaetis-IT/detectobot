@@ -38,7 +38,7 @@ def detect_objects(image_np, sess, detection_graph):
                     feed_dict={image_tensor: image_np_expanded})
 
 def getImage(inputPath):
-    path = os.path.join(inputPath)
+    path = os.path.join(params["file.location"] + inputPath)
     image = Image.open(path)
     (im_width, im_height) = image.size
     return np.array(image.getdata()).reshape((im_height, im_width, 3)).astype(np.uint8)
@@ -86,8 +86,11 @@ def worker(input_q, output_q):
 
     while True:
         image = input_q.get()
-        (boxes, scores, classes, num_detections) = detect_objects(getImage(image[params['input.path']]), sess, detection_graph)
-        image[params['output.detection']] = formatDetectionOutput(scores, boxes, classes)
+        if os.path.exists(params['file.location'] + image[params['input.path']]):
+            (boxes, scores, classes, num_detections) = detect_objects(getImage(image[params['input.path']]), sess, detection_graph)
+            image[params['output.detection']] = formatDetectionOutput(scores, boxes, classes)
+        else:
+            image[params['output.detection']] = {"ERROR":"Incorrect Pass {}".format(image[params['input.path']])}
         output_q.put(image)
 
     sess.close()
