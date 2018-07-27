@@ -27,11 +27,11 @@ def RunDetection(inputs):
     while True:
         if not output_q.empty():
             processedPicture = output_q.get()
-            if "ERROR" in processedPicture[params['output.detection']]:
+            if processedPicture[params['input.detectionError']] != "":
                 r = requests.post(params['url.error'], data=processedPicture)
             else:
                 r = requests.post(params['url.success'], data=processedPicture)
-            output.append({"status":r.status_code, "reason":r.reason})
+            output.append(processedPicture)
         if len(output) == len(inputs):
             break
 

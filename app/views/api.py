@@ -33,7 +33,7 @@ def detection():
             if v.validate(image):
                 imagesList.append(image) 
             else:
-                image[params['output.detection']] = {'ERROR missing inputs':"Not found or incorrect inputs"}
+                image[params['input.detectionError']] = "Not found or incorrect inputs"
                 r = requests.post(params['url.error'], data=image)
         if len(imagesList) == 0:
             raise InputsException

@@ -62,12 +62,12 @@ def bubbleSort(tab):
 
 def formatDetectionOutput(scores, boxes, labels):
     list_detect=[]
-    detect={"score":0,"box":[0,0,0,0],"label":0}
+    detect={}
     for s_class, b_class, l_class in zip(scores, boxes, labels):
         for score, box, label in zip(s_class, b_class, l_class):
             detect["score"]=score.tolist()
-            detect["box"]=box.tolist()
-            detect["label"]=label.tolist()
+            detect["box"]={params["output.ymin"]:float(box[0]), params["output.xmin"]:float(box[1]), params["output.ymax"]:float(box[2]), params["output.xmax"]:float(box[3])}
+            detect["label"]=category_index[int(label)]['name']
             list_detect.append(detect.copy())
     bubbleSort(list_detect)
     return list_detect
@@ -88,9 +88,9 @@ def worker(input_q, output_q):
         image = input_q.get()
         if os.path.exists(params['file.location'] + image[params['input.path']]):
             (boxes, scores, classes, num_detections) = detect_objects(getImage(image[params['input.path']]), sess, detection_graph)
-            image[params['output.detection']] = formatDetectionOutput(scores, boxes, classes)
+            image[params['input.detection']] = formatDetectionOutput(scores, boxes, classes)
         else:
-            image[params['output.detection']] = {"ERROR incorrect path":image[params['input.path']]}
+            image[params['input.detectionError']] = "Incorrect path {}".format(image[params['input.path']])
         output_q.put(image)
 
     sess.close()
