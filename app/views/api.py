@@ -34,7 +34,7 @@ def detection():
                 imagesList.append(image) 
             else:
                 image[params['output.detectionError']] = "Not found or incorrect inputs"
-                r = requests.post(params['url.error'], data=image)
+                r = requests.post(params['url.error'], data=json.dumps(image), headers = {'content-type':'application/json'})
         if len(imagesList) == 0:
             raise InputsException
                 

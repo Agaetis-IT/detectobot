@@ -3,6 +3,7 @@ from multiprocessing import Queue, Pool
 from app.models.objectDetection import worker
 from config import params
 import requests
+import json
 
 def RunDetection(inputs):
     """
@@ -28,9 +29,9 @@ def RunDetection(inputs):
         if not output_q.empty():
             processedPicture = output_q.get()
             if processedPicture[params['output.detectionError']] != "":
-                r = requests.post(params['url.error'], data=processedPicture)
+                r = requests.post(params['url.error'], data=json.dumps(processedPicture), headers = {'content-type':'application/json'})
             else:
-                r = requests.post(params['url.success'], data=processedPicture)
+                r = requests.post(params['url.success'], data=json.dumps(processedPicture), headers = {'content-type':'application/json'})
             output.append({"status":r.status_code, "error":processedPicture[params['output.detectionError']], "id":processedPicture[params['input.id']]})
         if len(output) == len(inputs):
             break
