@@ -10,10 +10,10 @@ input.url : "url"
 input.path : "path"
 input.user : "author"
 input.origin : "origin"
-input.detection : "detections"
-input.detectionError : "detectionError"
 
 # output params
+output.detection : "detections"
+output.detectionError : "detectionError"
 output.ymin : "topLeftY"
 output.xmin : "topLeftX"
 output.ymax : "bottomRightY"

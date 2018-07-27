@@ -86,11 +86,12 @@ def worker(input_q, output_q):
 
     while True:
         image = input_q.get()
+        image[params['output.detectionError']] = ""
         if os.path.exists(params['file.location'] + image[params['input.path']]):
             (boxes, scores, classes, num_detections) = detect_objects(getImage(image[params['input.path']]), sess, detection_graph)
-            image[params['input.detection']] = formatDetectionOutput(scores, boxes, classes)
+            image[params['output.detection']] = formatDetectionOutput(scores, boxes, classes)
         else:
-            image[params['input.detectionError']] = "Incorrect path {}".format(image[params['input.path']])
+            image[params['output.detectionError']] = "Incorrect path {}".format(image[params['input.path']])
         output_q.put(image)
 
     sess.close()
