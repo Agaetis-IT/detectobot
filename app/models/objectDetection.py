@@ -65,10 +65,11 @@ def formatDetectionOutput(scores, boxes, labels):
     detect={}
     for s_class, b_class, l_class in zip(scores, boxes, labels):
         for score, box, label in zip(s_class, b_class, l_class):
-            detect["score"]=score.tolist()
-            detect["box"]={params["output.ymin"]:float(box[0]), params["output.xmin"]:float(box[1]), params["output.ymax"]:float(box[2]), params["output.xmax"]:float(box[3])}
-            detect["label"]=category_index[int(label)]['name']
-            list_detect.append(detect.copy())
+            if score>=0.01:
+              detect["score"]=score.tolist()
+              detect["box"]={params["output.ymin"]:float(box[0]), params["output.xmin"]:float(box[1]), params["output.ymax"]:float(box[2]), params["output.xmax"]:float(box[3])}
+              detect["label"]=category_index[int(label)]['name']
+              list_detect.append(detect.copy())
     bubbleSort(list_detect)
     return list_detect
 
