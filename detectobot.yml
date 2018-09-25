@@ -33,5 +33,5 @@ model.nClasses : 1
 file.location : "/input"
 
 # Monobot processed image urls
-url.success : "https://mediobot.monobot.fr/picture/detection/processed/success"
-url.error : "https://mediobot.monobot.fr/picture/detection/processed/error"
+url.success : "http://mediobot-service/picture/detection/processed/success"
+url.error : "http://mediobot-service/picture/detection/processed/error"
